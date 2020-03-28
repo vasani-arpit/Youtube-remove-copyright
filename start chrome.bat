@@ -1,0 +1,1 @@
+START /D "C:\Program Files (x86)\Google\Chrome\Application" /B chrome.exe --remote-debugging-port=9222
