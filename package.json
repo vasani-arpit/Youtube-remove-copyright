@@ -19,6 +19,7 @@
   "homepage": "https://gitlab.com/vasani.arpit/remove-youtube-copyright#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
     "puppeteer-core": "^2.1.1"
   }
 }

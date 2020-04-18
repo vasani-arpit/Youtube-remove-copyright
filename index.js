@@ -3,6 +3,8 @@ const { assignClass, getCC } = require('./utils/domManipulation')
 const { removeCopyright } = require('./utils/removeCopyright')
 const { openTab } = require('./utils/tab')
 const puppeteer = require('puppeteer-core')
+require('dotenv').config()
+//const launchChrome = require('chrome-launcher') //TODO: Figure this out later
 
 async function launch() {
     try {
@@ -22,8 +24,14 @@ async function launch() {
         //let CC = await getCC(restrictionsColumn)
         console.log(`there are ${restrictionsColumn.length} copyright claims`)
 
-        for (let i = 0; i < 1; i++) {
-            removeCopyright(i, browser)
+        page.waitForSelector('paper-toast', { visible: true, timeout: 0 })
+            .then(() => {
+                console.log('There is an error. Exiting.')
+                process.exit(0)
+            })
+
+        for (let i = 0; i < restrictionsColumn.length; i++) {
+            await removeCopyright(i, page)
         }
 
         //await browser.close();
@@ -38,5 +46,4 @@ async function launch() {
 //await browser.close();
 
 launch()
-
 
