@@ -1,39 +1,75 @@
 const axios = require('axios');
-const { assignClass, getCC } = require('./utils/domManipulation')
+const {
+    assignClass,
+    getCC,
+    getNone,
+    showButtons,
+    checkProcessing
+} = require('./utils/domManipulation')
 const { removeCopyright } = require('./utils/removeCopyright')
 const { openTab } = require('./utils/tab')
 const puppeteer = require('puppeteer-core')
 require('dotenv').config()
+let browser;
 //const launchChrome = require('chrome-launcher') //TODO: Figure this out later
+async function setup() {
+    const response = await axios.get(`http://localhost:9222/json/version`);
+    const { webSocketDebuggerUrl } = response.data;
+
+    // Connecting the instance using `browserWSEndpoint`
+    browser = await puppeteer.connect({
+        defaultViewport: null,
+        browserWSEndpoint: webSocketDebuggerUrl
+    });
+    console.info(browser);
+    launch()
+}
 
 async function launch() {
     try {
-        const response = await axios.get(`http://localhost:9222/json/version`);
-        const { webSocketDebuggerUrl } = response.data;
-
-        // Connecting the instance using `browserWSEndpoint`
-        const browser = await puppeteer.connect({
-            defaultViewport: null,
-            browserWSEndpoint: webSocketDebuggerUrl
-        });
-        console.info(browser);
-
         let page = await openTab(browser)
         let restrictionsColumn = await page.evaluate(getCC)
         await page.evaluate(assignClass)
         //let CC = await getCC(restrictionsColumn)
         console.log(`there are ${restrictionsColumn.length} copyright claims`)
-
+        //is there any private videos with no copyright? yes then make them public and call launch()
+        let noRestrictionsColumn = await page.evaluate(getNone)
+        if (noRestrictionsColumn.length > 0) {
+            await page.click('#row-container > div.style-scope.ytcp-video-row.cell-body.tablecell-visibility > div > div')
+            await page.waitForSelector('[name="PUBLIC"]')
+            await page.click('[name="PUBLIC"]')
+            await page.waitForSelector('#save-button')
+            await page.click('#save-button')
+            await page.waitFor(3000)
+            await page.close()
+            await launch();
+        }
         page.waitForSelector('paper-toast', { visible: true, timeout: 0 })
             .then(() => {
-                console.log('There is an error. Exiting.')
+                console.log('There was an error. Exiting.')
                 process.exit(0)
+            }).catch(() => {
+                console.log('There was an error. Exiting.')
+                //process.exit(0)
             })
 
-        for (let i = 0; i < restrictionsColumn.length; i++) {
+        //check if video is processing first 
+
+        //removing first copyright of first two videos video
+        for (let i = 0; i < 2; i++) {
             await removeCopyright(i, page)
         }
-
+        await page.evaluate(showButtons)
+        console.log('buttons are here')
+        await page.click("#anchor-video-details")
+        await page.waitForSelector('a[tooltip-text="Editor"]')
+        await page.click('a[tooltip-text="Editor"]')
+        await page.waitForSelector('#cover-area')
+        //await page.waitForSelector('#mask', { hidden: true, timeout: 0 })
+        await page.evaluate(checkProcessing)
+        console.log("video processing is done. You can now proceed with other tasks")
+        await page.close()
+        await launch()
         //await browser.close();
         //await chrome.kill();
     } catch (error) {
@@ -44,6 +80,4 @@ async function launch() {
 
 
 //await browser.close();
-
-launch()
-
+setup()
