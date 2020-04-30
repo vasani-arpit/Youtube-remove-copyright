@@ -2,11 +2,11 @@
 
 ### Preview
 
-<div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7BBrMG7ch5M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+[![Youtube preview link](https://img.youtube.com/vi/7BBrMG7ch5M/0.jpg)](https://www.youtube.com/watch?v=7BBrMG7ch5M)
 
 ### What is this?
+
+This is a [puppeteer](pptr.dev) script which will open youtube studio and find videos with copyright and remove them automatically. It's same process as user manually clicking buttons but puppeteer allows automate that. 
 
 ### How to start this app
 
