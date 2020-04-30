@@ -17,6 +17,7 @@ This is a [puppeteer](https://pptr.dev) script which will open YouTube studio an
 1. make sure you are logged in and switched to proper channel in youtube before starting this script
 1. Git clone, switch to folder and Do `npm install`
 1. you can start the script either by terminal with command `node index.js` or from vscode with `F5`
+1. Keep the chrome tab focused and keep your mouse pointer outside of chrome window. lot of things works on hover event your mouse pointer can break things
 
 ### Why I created this?
 
