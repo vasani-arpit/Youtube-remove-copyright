@@ -20,7 +20,12 @@ This is a [puppeteer](https://pptr.dev) script which will open YouTube studio an
 
 ### Why I created this?
 
+I want to say I have made an AI which automatically creates interesting videos and uploads to a youtube account I created but that would be a lie. It's not AI it's just a script with bunch of statements. 
+
+Although there is an API to upload videos to a youtube, there are none to remove copyrights. Uploader will have to manually go to studio.youtube.com and remove part of the video one-by-one. yes one-by-one. There is not even a option to do multiple at once. 🤷‍♂️
+
+That's why I created this. Upload script will keep uploading videos as visiblity private and this one will keep removing copyrighted parts from the videos and make them pubilc. 
 
 ---
 
-Got more questions? ask [here](https://github.com)
+Got more questions? ask [here](https://github.com/vasani-arpit/Youtube-remove-copyright/issues/new)
