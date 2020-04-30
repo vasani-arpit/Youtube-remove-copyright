@@ -4,7 +4,8 @@ const {
     getCC,
     getNone,
     showButtons,
-    checkProcessing
+    checkProcessing,
+    getLink
 } = require('./utils/domManipulation')
 const { removeCopyright } = require('./utils/removeCopyright')
 const { openTab } = require('./utils/tab')
@@ -29,21 +30,21 @@ async function launch() {
     try {
         let page = await openTab(browser)
         let restrictionsColumn = await page.evaluate(getCC)
-        await page.evaluate(assignClass)
+        let cNumber = await page.evaluate(assignClass)
         //let CC = await getCC(restrictionsColumn)
         console.log(`there are ${restrictionsColumn.length} copyright claims`)
         //is there any private videos with no copyright? yes then make them public and call launch()
-        let noRestrictionsColumn = await page.evaluate(getNone)
-        if (noRestrictionsColumn.length > 0) {
-            await page.click('#row-container > div.style-scope.ytcp-video-row.cell-body.tablecell-visibility > div > div')
-            await page.waitForSelector('[name="PUBLIC"]')
-            await page.click('[name="PUBLIC"]')
-            await page.waitForSelector('#save-button')
-            await page.click('#save-button')
-            await page.waitFor(3000)
-            await page.close()
-            await launch();
-        }
+        // let noRestrictionsColumn = await page.evaluate(getNone)
+        // if (noRestrictionsColumn.length > 0) {
+        //     await page.click('#row-container > div.style-scope.ytcp-video-row.cell-body.tablecell-visibility > div > div')
+        //     await page.waitForSelector('[name="PUBLIC"]')
+        //     await page.click('[name="PUBLIC"]')
+        //     await page.waitForSelector('#save-button')
+        //     await page.click('#save-button')
+        //     await page.waitFor(3000)
+        //     await page.close()
+        //     await launch();
+        // }
         page.waitForSelector('paper-toast', { visible: true, timeout: 0 })
             .then(() => {
                 console.log('There was an error. Exiting.')
@@ -54,16 +55,17 @@ async function launch() {
             })
 
         //check if video is processing first 
-
+        let lastUpdatedVideoNumber
         //removing first copyright of first two videos video
-        for (let i = 0; i < 2; i++) {
+        for (let i = cNumber; i > cNumber - 2; i--) {
             await removeCopyright(i, page)
+            lastUpdatedVideoNumber = i
         }
         await page.evaluate(showButtons)
         console.log('buttons are here')
-        await page.click("#anchor-video-details")
-        await page.waitForSelector('a[tooltip-text="Editor"]')
-        await page.click('a[tooltip-text="Editor"]')
+        await page.waitForSelector("#anchor-video-details")
+        let openLink = await page.evaluate(getLink, lastUpdatedVideoNumber)
+        await page.goto(openLink + 'or')
         await page.waitForSelector('#cover-area')
         //await page.waitForSelector('#mask', { hidden: true, timeout: 0 })
         await page.evaluate(checkProcessing)
@@ -75,9 +77,7 @@ async function launch() {
     } catch (error) {
         console.log(error)
     }
-
 }
-
 
 //await browser.close();
 setup()

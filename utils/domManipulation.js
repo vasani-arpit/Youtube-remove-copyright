@@ -16,6 +16,7 @@ module.exports = {
         cVideos.forEach((video, i) => {
             video.parentElement.classList.add("hoverthis" + i)
         });
+        return cVideos.length - 1
 
     },
 
@@ -36,5 +37,8 @@ module.exports = {
             }, 2000)
         })
 
+    },
+    getLink: function (nth) {
+        return document.querySelectorAll("ytcp-video-list-cell-video a#anchor-video-details")[nth].href
     }
 }
