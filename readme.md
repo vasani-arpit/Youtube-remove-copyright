@@ -19,6 +19,8 @@ This is a [puppeteer](https://pptr.dev) script which will open YouTube studio an
 1. you can start the script either by terminal with command `node index.js` or from vscode with `F5`
 1. Keep the chrome tab focused and keep your mouse pointer outside of chrome window. lot of things works on hover event your mouse pointer can break things
 
+*Keep in mind that the script is designed to work for more then one video. Make sure you have more then two videos with copyright to successfully run this script.*
+
 ### Why I created this?
 
 I want to say I have made an AI which automatically creates interesting videos and uploads to a youtube account I created but that would be a lie. It's not AI it's just a script with bunch of statements. 
