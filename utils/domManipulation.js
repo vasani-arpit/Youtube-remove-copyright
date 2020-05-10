@@ -14,9 +14,9 @@ module.exports = {
         let cVideos = Array.from(document.querySelectorAll('#row-container > div:nth-child(4) > div > div'))
             .filter(element => element.innerText == "Copyright claim")
         cVideos.forEach((video, i) => {
-            video.parentElement.classList.add("hoverthis" + i)
+            video.parentElement.classList.add("hoverthis" + (i + 1))
         });
-        return cVideos.length - 1
+        return cVideos.length
 
     },
 

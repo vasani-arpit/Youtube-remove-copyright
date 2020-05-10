@@ -31,6 +31,10 @@ async function launch() {
         let page = await openTab(browser)
         let restrictionsColumn = await page.evaluate(getCC)
         let cNumber = await page.evaluate(assignClass)
+        if (cNumber == 0) {
+            console.log("There is no copyright to remove.")
+            process.exit(0)
+        }
         //let CC = await getCC(restrictionsColumn)
         console.log(`there are ${restrictionsColumn.length} copyright claims`)
         //is there any private videos with no copyright? yes then make them public and call launch()
@@ -55,16 +59,17 @@ async function launch() {
             })
 
         //check if video is processing first 
-        let lastUpdatedVideoNumber
+        let lastUpdatedVideoNumber = 0, loopCount = 0
+        loopCount = (cNumber == 1) ? 1 : cNumber - 2
         //removing first copyright of first two videos video
-        for (let i = cNumber; i > cNumber - 2; i--) {
+        for (let i = cNumber; i >= loopCount; i--) {
             await removeCopyright(i, page)
             lastUpdatedVideoNumber = i
         }
         await page.evaluate(showButtons)
         console.log('buttons are here')
         await page.waitForSelector("#anchor-video-details")
-        let openLink = await page.evaluate(getLink, lastUpdatedVideoNumber)
+        let openLink = await page.evaluate(getLink, lastUpdatedVideoNumber - 1)
         await page.goto(openLink + 'or')
         await page.waitForSelector('#cover-area')
         //await page.waitForSelector('#mask', { hidden: true, timeout: 0 })
