@@ -60,9 +60,9 @@ async function launch() {
 
         //check if video is processing first 
         let lastUpdatedVideoNumber = 0, loopCount = 0
-        loopCount = (cNumber == 1) ? 1 : cNumber - 2
+        loopCount = (cNumber == 1) ? 0 : cNumber - 2
         //removing first copyright of first two videos video
-        for (let i = cNumber; i >= loopCount; i--) {
+        for (let i = cNumber; i > loopCount; i--) {
             await removeCopyright(i, page)
             lastUpdatedVideoNumber = i
         }
