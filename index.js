@@ -69,7 +69,8 @@ async function launch() {
         await page.evaluate(showButtons)
         console.log('buttons are here')
         await page.waitForSelector("#anchor-video-details")
-        let openLink = await page.evaluate(getLink, lastUpdatedVideoNumber - 1)
+        let linkToOpen = (restrictionsColumn.length == 1) ? lastUpdatedVideoNumber - 1 : lastUpdatedVideoNumber 
+        let openLink = await page.evaluate(getLink, linkToOpen)
         await page.goto(openLink + 'or')
         await page.waitForSelector('#cover-area')
         //await page.waitForSelector('#mask', { hidden: true, timeout: 0 })
