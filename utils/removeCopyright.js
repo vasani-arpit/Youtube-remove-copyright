@@ -29,13 +29,13 @@ module.exports = {
             //closing popup
             await page.waitForSelector('#remove-claim-tool > ytcr-claim-tool-remove-claim > div > ytcr-editing-in-progress > ytcp-badge')
             //await page.waitFor(2000)
-            await page.click('#dialog > div.header.style-scope.ytcp-dialog > div > div:nth-child(2) > ytcp-icon-button > iron-icon')
-            //video details 
-            //#anchor-video-details
-            await page.waitFor(3000)
+            await page.click('#dialog > div.header.style-scope.ytcp-dialog > div > div:nth-child(2) > ytcp-icon-button')
+        //     //video details 
+        //     //#anchor-video-details
+        //     await page.waitFor(3000)
         } else {
             console.log("Video is already in processing. checking")
-            await page.click('#dialog > div.header.style-scope.ytcp-dialog > div > div:nth-child(2) > ytcp-icon-button > iron-icon')
+            await page.click('#dialog > div.header.style-scope.ytcp-dialog > div > div:nth-child(2) > ytcp-icon-button')
         }
     }
 }
