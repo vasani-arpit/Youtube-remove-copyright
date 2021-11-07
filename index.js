@@ -33,6 +33,7 @@ async function launch() {
         let cNumber = await page.evaluate(assignClass)
         if (cNumber == 0) {
             console.log("There is no copyright to remove.")
+            page.close()
             process.exit(0)
         }
         //let CC = await getCC(restrictionsColumn)
@@ -52,10 +53,12 @@ async function launch() {
         page.waitForSelector('paper-toast', { visible: true, timeout: 0 })
             .then(() => {
                 console.log('There was an error. Exiting.')
+                page.close()
                 process.exit(0)
             }).catch(() => {
                 console.log('There was an error. Exiting.')
-                //process.exit(0)
+                page.close()
+                process.exit(0)
             })
 
         //check if video is processing first 
@@ -78,10 +81,12 @@ async function launch() {
         console.log("video processing is done. You can now proceed with other tasks")
         await page.close()
         await launch()
-        //await browser.close();
-        //await chrome.kill();
+        // await browser.close();
+        // await chrome.kill();
     } catch (error) {
         console.log(error)
+        page.close()
+        process.exit(0)
     }
 }
 

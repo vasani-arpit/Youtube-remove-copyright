@@ -1,17 +1,17 @@
 module.exports = {
     getCC: function () {
-        let cVideos = Array.from(document.querySelectorAll('#row-container > div:nth-child(4) > div > div'))
+        let cVideos = Array.from(document.querySelectorAll('#row-container > div:nth-child(5) > div > div'))
             .filter(element => element.innerText == "Copyright claim")
         return cVideos
     },
     getNone: function () {
-        let cVideos = Array.from(document.querySelectorAll('#row-container > div:nth-child(4) > div > div'))
+        let cVideos = Array.from(document.querySelectorAll('#row-container > div:nth-child(5) > div > div'))
             .filter(element => element.innerText == "None")
         return cVideos
     },
     assignClass: function () {
         //assigning an class to copuright claim text so that it can be hovered
-        let cVideos = Array.from(document.querySelectorAll('#row-container > div:nth-child(4) > div > div'))
+        let cVideos = Array.from(document.querySelectorAll('#row-container > div:nth-child(5) > div > div'))
             .filter(element => element.innerText == "Copyright claim")
         cVideos.forEach((video, i) => {
             video.parentElement.classList.add("hoverthis" + (i + 1))
