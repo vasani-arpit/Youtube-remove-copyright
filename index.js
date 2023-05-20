@@ -9,19 +9,23 @@ const {
 } = require('./utils/domManipulation')
 const { removeCopyright } = require('./utils/removeCopyright')
 const { openTab } = require('./utils/tab')
-const puppeteer = require('puppeteer-core')
+const { chromium } = require('playwright-chromium');
+
+// const puppeteer = require('puppeteer-core')
 require('dotenv').config()
 let browser;
 //const launchChrome = require('chrome-launcher') //TODO: Figure this out later
 async function setup() {
-    const response = await axios.get(`http://localhost:9222/json/version`);
-    const { webSocketDebuggerUrl } = response.data;
+    // const response = await axios.get(`http://localhost:9222/json/version`);
+    // const { webSocketDebuggerUrl } = response.data;
 
     // Connecting the instance using `browserWSEndpoint`
-    browser = await puppeteer.connect({
-        defaultViewport: null,
-        browserWSEndpoint: webSocketDebuggerUrl
-    });
+    const pl = await chromium.connectOverCDP('http://localhost:9222')
+    browser = pl.contexts()[0]
+    // browser = await puppeteer.connect({
+    //     defaultViewport: null,
+    //     browserWSEndpoint: "ws://localhost:9222/devtools/browser/40e5672f-c284-42db-b414-54abb674638a"
+    // });
     console.info(browser);
     launch()
 }
@@ -69,7 +73,7 @@ async function launch() {
         await page.evaluate(showButtons)
         console.log('buttons are here')
         await page.waitForSelector("#anchor-video-details")
-        let linkToOpen = (restrictionsColumn.length == 1) ? lastUpdatedVideoNumber - 1 : lastUpdatedVideoNumber 
+        let linkToOpen = (restrictionsColumn.length == 1) ? lastUpdatedVideoNumber - 1 : lastUpdatedVideoNumber
         let openLink = await page.evaluate(getLink, linkToOpen)
         await page.goto(openLink + 'or')
         await page.waitForSelector('#cover-area')
