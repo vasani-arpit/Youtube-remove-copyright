@@ -26,7 +26,7 @@ async function setup() {
     //     defaultViewport: null,
     //     browserWSEndpoint: "ws://localhost:9222/devtools/browser/40e5672f-c284-42db-b414-54abb674638a"
     // });
-    console.info(browser);
+    // console.info(browser);
     launch()
 }
 

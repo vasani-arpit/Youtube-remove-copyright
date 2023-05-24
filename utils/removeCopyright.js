@@ -1,3 +1,5 @@
+const { delay } = require("./domManipulation")
+
 module.exports = {
     removeCopyright: async function (myNumber, page) {
 
@@ -7,7 +9,7 @@ module.exports = {
         //work on the number given in parameter
         await page.click('.hoverthis' + myNumber)
         //await page.click('#tooltip ytcp-button')
-        await page.waitFor(3000)
+        await delay(3000)
         await page.waitForSelector('ytcp-paper-tooltip-placeholder')
         //await page.waitFor(2000) //could have used sloMo but 🤷‍♂️
         await page.click('#tooltip a.action-link')

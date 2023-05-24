@@ -12,7 +12,7 @@ module.exports = {
     assignClass: function () {
         //assigning an class to copuright claim text so that it can be hovered
         let cVideos = Array.from(document.querySelectorAll('#row-container > div:nth-child(4) > div > div'))
-            .filter(element => element.innerText == "Copyright claim")
+            .filter(element => element.innerText == "Copyright")
         cVideos.forEach((video, i) => {
             video.parentElement.classList.add("hoverthis" + (i + 1))
         });
@@ -40,5 +40,11 @@ module.exports = {
     },
     getLink: function (nth) {
         return document.querySelectorAll("ytcp-video-list-cell-video a#anchor-video-details")[nth].href
+    },
+
+    delay: async function (ms) {
+        return new Promise((resolve, reject) => {
+            setTimeout(resolve, ms)
+        })
     }
 }
