@@ -35,7 +35,7 @@ module.exports = {
             await page.click('ytcp-icon-button.close-button.style-scope.ytcr-video-home-dialog')
             //video details 
             //#anchor-video-details
-            await page.waitFor(3000)
+            await page.waitForTimeout(3000)
         } else {
             console.log("Video is already in processing. checking")
             // close popup

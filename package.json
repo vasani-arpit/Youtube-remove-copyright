@@ -3,8 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": "index.js",
+  "pkg": {
+    "scripts": "**/*.js",
+    "targets": [
+      "node14-win-x64"
+    ],
+    "outputPath": "build"
+  },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "pkg ."
   },
   "repository": {
     "type": "git",
@@ -20,6 +29,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
+    "pkg": "^5.8.1",
     "playwright-chromium": "^1.34.0"
   }
 }
