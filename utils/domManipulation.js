@@ -1,7 +1,7 @@
 module.exports = {
     getCC: function () {
         let cVideos = Array.from(document.querySelectorAll('#row-container > div:nth-child(4) > div > div'))
-            .filter(element => element.innerText == "Copyright claim")
+            .filter(element => element.innerText == "Copyright")
         return cVideos
     },
     getNone: function () {
@@ -10,7 +10,7 @@ module.exports = {
         return cVideos
     },
     assignClass: function () {
-        //assigning an class to copuright claim text so that it can be hovered
+        //assigning an class to copyright claim text so that it can be hovered
         let cVideos = Array.from(document.querySelectorAll('#row-container > div:nth-child(4) > div > div'))
             .filter(element => element.innerText == "Copyright")
         cVideos.forEach((video, i) => {

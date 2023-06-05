@@ -71,17 +71,17 @@ async function launch() {
             lastUpdatedVideoNumber = i
         }
         await page.evaluate(showButtons)
-        console.log('buttons are here')
-        await page.waitForSelector("#anchor-video-details")
-        let linkToOpen = (restrictionsColumn.length == 1) ? lastUpdatedVideoNumber - 1 : lastUpdatedVideoNumber
-        let openLink = await page.evaluate(getLink, linkToOpen)
-        await page.goto(openLink + 'or')
-        await page.waitForSelector('#cover-area')
-        //await page.waitForSelector('#mask', { hidden: true, timeout: 0 })
-        await page.evaluate(checkProcessing)
-        console.log("video processing is done. You can now proceed with other tasks")
-        await page.close()
-        await launch()
+        // console.log('buttons are here')
+        // await page.waitForSelector("#anchor-video-details")
+        // let linkToOpen = (restrictionsColumn.length == 1) ? lastUpdatedVideoNumber - 1 : lastUpdatedVideoNumber
+        // let openLink = await page.evaluate(getLink, linkToOpen)
+        // await page.goto(openLink + 'or')
+        // await page.waitForSelector('#cover-area')
+        // //await page.waitForSelector('#mask', { hidden: true, timeout: 0 })
+        // await page.evaluate(checkProcessing)
+        // console.log("video processing is done. You can now proceed with other tasks")
+        // await page.close()
+        // await launch()
         //await browser.close();
         //await chrome.kill();
     } catch (error) {
